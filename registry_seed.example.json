@@ -1,0 +1,6 @@
+[
+  {"entity_id": "twin",    "host": "192.168.2.50", "port": 9200, "kind": "twin"},
+  {"entity_id": "central", "host": "192.168.2.60", "port": 9300, "kind": "central"},
+  {"entity_id": "car-1",   "host": "192.168.2.11", "port": 9101, "kind": "car"},
+  {"entity_id": "car-2",   "host": "192.168.2.12", "port": 9102, "kind": "car"}
+]
