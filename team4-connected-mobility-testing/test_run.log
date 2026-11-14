@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /home/claude/team4-connected-mobility-testing
+configfile: pytest.ini
+testpaths: tests
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collecting ... collected 15 items
+
+tests/test_integration.py::test_IT01_command_relayed_to_matching_car_only PASSED [  6%]
+tests/test_integration.py::test_IT02_telemetry_syncs_to_digital_twin PASSED [ 13%]
+tests/test_integration.py::test_IT03_digital_twin_unavailable_is_handled PASSED [ 20%]
+tests/test_integration.py::test_IT04_broadcast_acted_on_by_all_cars PASSED [ 26%]
+tests/test_integration.py::test_IT05_duplicate_and_out_of_order_telemetry_rejected PASSED [ 33%]
+tests/test_system.py::test_ST01_end_to_end_sense_sync_act PASSED         [ 40%]
+tests/test_system.py::test_ST02_device_fault_detected_and_contained PASSED [ 46%]
+tests/test_unit.py::test_UT01_parse_valid_telemetry PASSED               [ 53%]
+tests/test_unit.py::test_UT02_parse_malformed_json_rejected PASSED       [ 60%]
+tests/test_unit.py::test_UT03_parse_nan_payload_rejected PASSED          [ 66%]
+tests/test_unit.py::test_UT03b_missing_required_field_rejected PASSED    [ 73%]
+tests/test_unit.py::test_UT04_valid_drive_command_accepted PASSED        [ 80%]
+tests/test_unit.py::test_UT05_throttle_over_limit_rejected PASSED        [ 86%]
+tests/test_unit.py::test_UT06_command_to_unregistered_destination_rejected PASSED [ 93%]
+tests/test_unit.py::test_UT06b_stale_command_rejected PASSED             [100%]
+
+============================== 15 passed in 0.03s ==============================

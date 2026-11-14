@@ -1,0 +1,35 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /home/claude/team4-connected-mobility-testing
+configfile: pytest.ini
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collecting ... collected 1 item
+
+tests/test_integration.py::test_IT05_duplicate_and_out_of_order_telemetry_rejected FAILED [100%]
+
+=================================== FAILURES ===================================
+___________ test_IT05_duplicate_and_out_of_order_telemetry_rejected ____________
+
+harness = {'registry': <connected_mobility.registry.EntityRegistry object at 0x7f64f1e7aba0>, 'twin': <connected_mobility.centra...st_seen={'carA': 1002.0}, twin_errors=[]), 'bus': <connected_mobility.transport.MockBus object at 0x7f64f1e7b620>, ...}
+
+    def test_IT05_duplicate_and_out_of_order_telemetry_rejected(harness):
+        """IT-05 (FAILURE scenario): the central sync must reject duplicate and
+        out-of-order telemetry per the digital-twin robustness rule (README s.11:
+        'reject duplicate or out-of-order sequence numbers'). A newer frame is
+        accepted; an older or repeated seq for the same car must NOT overwrite the
+        twin with stale data."""
+        carA, twin, central_logic = harness["carA"], harness["twin"], harness["central_logic"]
+    
+        carA.broadcast(telemetry_frame(seq=5, src="carA", x=5.0, ts=1000.0))   # accept
+        carA.broadcast(telemetry_frame(seq=3, src="carA", x=3.0, ts=1001.0))   # out-of-order -> reject
+        carA.broadcast(telemetry_frame(seq=5, src="carA", x=99.0, ts=1002.0))  # duplicate -> reject
+    
+        # The twin must still hold the seq-5 state; stale frames were dropped.
+>       assert twin.get_state("carA")["x"] == 5.0
+E       assert 99.0 == 5.0
+
+tests/test_integration.py:120: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_integration.py::test_IT05_duplicate_and_out_of_order_telemetry_rejected - assert 99.0 == 5.0
+============================== 1 failed in 0.03s ===============================
